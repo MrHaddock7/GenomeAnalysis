@@ -3,7 +3,7 @@
 #SBATCH -M snowy
 #SBATCH -p core
 #SBATCH -n 2
-#SBATCH -t 2:00:00
+#SBATCH -t 02:00:00
 #SBATCH -J long_read_preprocess
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user villew7@gmail.com
@@ -20,7 +20,10 @@ module load Porechop
 
 for i in {66,72,81};
 do
-zcat "${INPUT_PATH}SRR244130${i}.fastq.gz" | porechop -i - -o "${OUTPUT}/01-04-DNA_longread_${i}trimmed.fastq.gz" --format fastq.gz --threads 2
+cp "${INPUT_PATH}SRR244130${i}.fastq.gz" $SNIC_TMP/
+cd $SNIC_TMP
+gunzip -c "SRR244130${i}.fastq.gz" > "SRR244130${i}.fastq"
+porechop -i "SRR244130${i}.fastq" -o "${OUTPUT}/01-04-DNA_longread_${i}trimmed.fastq.gz" --format fastq.gz --threads 2
 done
 
 
