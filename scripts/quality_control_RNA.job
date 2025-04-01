@@ -1,0 +1,27 @@
+#!/bin/bash -l
+#SBATCH -A uppmax2025-3-3
+#SBATCH -M snowy
+#SBATCH -p core
+#SBATCH -n 2
+#SBATCH -t 30:00
+#SBATCH -J quality_short_reads_DNA
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user villew7@gmail.com
+#SBATCH --output=%x.%j.out
+
+OUTPUT='/home/haddock/private/Genome_analysis/GenomeAnalysis/analyses/01_preprocessing/01-04-fastqc_rna'
+INPUT_PATH='/home/haddock/private/Genome_analysis/GenomeAnalysis/data/raw_data/RNA_reads/'
+
+# Load modules
+module load bioinfo-tools
+module load FastQC
+
+# Execution
+
+for i in {56,57,58,59,60,61,62,63,64};
+do 
+    fastqc -o $OUTPUT --threads 2 "${INPUT_PATH}SRR245164${i}_1.fastq.gz" "${INPUT_PATH}SRR245164${i}_2.fastq.gz"
+done
+
+
+
