@@ -2,8 +2,8 @@
 #SBATCH -A uppmax2025-3-3
 #SBATCH -M snowy
 #SBATCH -p core
-#SBATCH -n 2
-#SBATCH -t 02:00:00
+#SBATCH -n 8
+#SBATCH -t 01:30:00
 #SBATCH -J long_read_preprocess
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user villew7@gmail.com
@@ -16,15 +16,24 @@ INPUT_PATH='/home/haddock/private/Genome_analysis/GenomeAnalysis/data/raw_data/D
 module load bioinfo-tools
 module load Porechop
 
-# Execution
+# Execution for all samples
 
-for i in {66,72,81};
-do
-cp "${INPUT_PATH}SRR244130${i}.fastq.gz" $SNIC_TMP/
+#for i in {66,72,81};
+#do
+#cp "${INPUT_PATH}SRR244130${i}.fastq.gz" $SNIC_TMP/
+#cd $SNIC_TMP
+#gunzip -c "SRR244130${i}.fastq.gz" > "SRR244130${i}.fastq"
+#porechop -i "SRR244130${i}.fastq" -o "${OUTPUT}/01-04-DNA_longread_${i}trimmed.fastq.gz" --format fastq.gz --threads 2
+#done
+
+cp "${INPUT_PATH}SRR24413072.fastq.gz" $SNIC_TMP/
+cp "${INPUT_PATH}SRR24413081.fastq.gz" $SNIC_TMP/
+
 cd $SNIC_TMP
-gunzip -c "SRR244130${i}.fastq.gz" > "SRR244130${i}.fastq"
-porechop -i "SRR244130${i}.fastq" -o "${OUTPUT}/01-04-DNA_longread_${i}trimmed.fastq.gz" --format fastq.gz --threads 2
-done
 
+gunzip -c "SRR24413072.fastq.gz" > "SRR24413072.fastq"
+gunzip -c "SRR24413081.fastq.gz" > "SRR24413081.fastq"
 
-
+porechop -i "SRR24413072.fastq" -o "${OUTPUT}/01-04-DNA_longread_72trimmed.fastq.gz" --format fastq.gz --threads 4 &
+porechop -i "SRR24413081.fastq" -o "${OUTPUT}/01-04-DNA_longread_81trimmed.fastq.gz" --format fastq.gz --threads 4 &
+wait

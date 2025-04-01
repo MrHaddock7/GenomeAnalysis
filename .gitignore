@@ -1,5 +1,5 @@
-data/*.fastq
-data/*.fasta
-results/*.fastq
-results/*.fasta
+*.fastq
+*.fasta
+*.fastq.gz
+*.fasta.gz
 *.out
