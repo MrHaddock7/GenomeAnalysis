@@ -1,0 +1,51 @@
+#!/bin/bash -l
+#SBATCH -A uppmax2025-3-3
+#SBATCH -M snowy
+#SBATCH -p core
+#SBATCH -n 8
+#SBATCH -t 45:00
+#SBATCH -J shortread_dna_preprocess
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user villew7@gmail.com
+#SBATCH --output=%x.%j.out
+
+OUTPUT='/home/haddock/private/Genome_analysis/GenomeAnalysis/analyses/01_preprocessing/02-04-trimomatic_dna'
+INPUT_PATH='/home/haddock/private/Genome_analysis/GenomeAnalysis/data/raw_data/DNA_reads/short_reads/'
+OUTPUT_FastQC='/home/haddock/private/Genome_analysis/GenomeAnalysis/analyses/01_preprocessing/02-04-trimomatic_dna/02-04-fastqc'
+
+# Load modules
+module load bioinfo-tools
+module load trimmomatic
+module load FastQC
+
+java -jar $TRIMMOMATIC_ROOT/trimmomatic.jar
+
+# Execution
+
+# Loop through all reads
+for i in {65,71,80};
+do 
+    # Copy to temp dir
+    cp "${INPUT_PATH}SRR244130${i}_1.fastq.gz" $SNIC_TMP
+    cp "${INPUT_PATH}SRR244130${i}_2.fastq.gz" $SNIC_TMP
+
+    cd $SNIC_TMP
+
+    # Uncompress the files
+    gunzip "SRR244130${i}_1.fastq.gz" > "SRR244130${i}_1.fastq"
+    gunzip "SRR244130${i}_2.fastq.gz" > "SRR244130${i}_2.fastq"
+
+    # Trim the reads
+    trimmomatic PE -threads 8 -phred33 "SRR244130${i}_1.fastq" "SRR244130${i}_2.fastq" "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq" ILLUMINACLIP:/home/haddock/private/Genome_analysis/GenomeAnalysis/scripts/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:36
+    
+    # Quality control of the outputs so we can compare
+    fastqc -o $OUTPUT_FastQC --threads 8 "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq"
+
+    # Zip the timmed reads
+    gzip -v "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq"
+    
+
+    cp *.trimmed.fastq.gz $OUTPUT
+done
+
+
