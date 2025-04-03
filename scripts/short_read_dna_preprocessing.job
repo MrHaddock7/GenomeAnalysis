@@ -36,7 +36,7 @@ do
     gunzip "SRR244130${i}_2.fastq.gz" > "SRR244130${i}_2.fastq"
 
     # Trim the reads
-    trimmomatic PE -threads 8 -phred33 "SRR244130${i}_1.fastq" "SRR244130${i}_2.fastq" "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq" ILLUMINACLIP:/home/haddock/private/Genome_analysis/GenomeAnalysis/scripts/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:20 SLIDINGWINDOW:4:15 MINLEN:36
+    trimmomatic PE -threads 8 -phred33 "SRR244130${i}_1.fastq" "SRR244130${i}_2.fastq" "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq" ILLUMINACLIP:/home/haddock/private/Genome_analysis/GenomeAnalysis/scripts/TruSeq3-PE-2.fa:2:30:10 LEADING:3 TRAILING:20 SLIDINGWINDOW:4:10 MINLEN:36
     
     # Quality control of the outputs so we can compare
     fastqc -o $OUTPUT_FastQC --threads 8 "shortread_dna_${i}_1.trimmed.fastq" "shortread_dna_${i}_1un.trimmed.fastq" "shortread_dna_${i}_2.trimmed.fastq" "shortread_dna_${i}_2un.trimmed.fastq"
