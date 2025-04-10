@@ -4,7 +4,7 @@
 #SBATCH -p core
 #SBATCH -n 6
 #SBATCH -t 15:00 --qos=short
-#SBATCH -J dna_assembly_flye
+#SBATCH -J dna_assembly_check_quast
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user villew7@gmail.com
 #SBATCH --output=%x.%j.out
