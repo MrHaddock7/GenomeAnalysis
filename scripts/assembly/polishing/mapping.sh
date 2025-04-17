@@ -27,30 +27,30 @@ wait
 
 cd $SNIC_TMP
 
-bwa mem -t 5 "${FLYE_INPUT}DV3/DV3_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_80_1un.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_80_2un.trimmed.fastq.gz" > "${SNIC_TMP}/DV3.unpaired.sam" &
-bwa mem -t 5 "${FLYE_INPUT}HP126/HP126_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_65_1un.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_65_2un.trimmed.fastq.gz" > "${SNIC_TMP}/HP126.unpaired.sam" &
-bwa mem -t 5 "${FLYE_INPUT}R7/R7_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_71_1un.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_71_2un.trimmed.fastq.gz" > "${SNIC_TMP}/R7.unpaired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}DV3/DV3_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_80_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_80_2.trimmed.fastq.gz" > "${SNIC_TMP}/DV3.paired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}HP126/HP126_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_65_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_65_2.trimmed.fastq.gz" > "${SNIC_TMP}/HP126.paired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}R7/R7_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_71_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_71_2.trimmed.fastq.gz" > "${SNIC_TMP}/R7.paired.sam" &
 
 wait
 
 # Convert SAM output to BAM
 
-samtools view -bSh DV3.unpaired.sam > DV3.unpaired.unsorted.bam &
-samtools view -bSh HP126.unpaired.sam > HP126.unpaired.unsorted.bam &
-samtools view -bSh R7.unpaired.sam > R7.unpaired.unsorted.bam &
+samtools view -bSh DV3.paired.sam > DV3.paired.unsorted.bam &
+samtools view -bSh HP126.paired.sam > HP126.paired.unsorted.bam &
+samtools view -bSh R7.paired.sam > R7.paired.unsorted.bam &
 
 wait
 
 # Sort BAM files
 
-samtools sort DV3.unpaired.unsorted.bam -o "${BAM_OUTPUT}DV3.unpaired.sorted.bam" &
-samtools sort HP126.unpaired.unsorted.bam -o "${BAM_OUTPUT}HP126.unpaired.sorted.bam" &
-samtools sort R7.unpaired.unsorted.bam -o "${BAM_OUTPUT}R7.unpaired.sorted.bam" &
+samtools sort DV3.unpaired.sorted.bam -o "${BAM_OUTPUT}DV3.paired.sorted.bam" &
+samtools sort HP126.unpaired.sorted.bam -o "${BAM_OUTPUT}HP126.paired.sorted.bam" &
+samtools sort R7.unpaired.sorted.bam -o "${BAM_OUTPUT}R7.paired.sorted.bam" &
 
 wait
 
-samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/DV3.unpaired.sorted.bam &
-samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/HP126.unpaired.sorted.bam & 
-samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/R7.unpaired.sorted.bam &
+samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/DV3.paired.sorted.bam &
+samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/HP126.paired.sorted.bam & 
+samtools index /home/haddock/private/Genome_analysis/GenomeAnalysis/data/mapped_outputs/R7.paired.sorted.bam &
 
 wait
