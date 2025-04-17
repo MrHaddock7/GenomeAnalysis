@@ -3,7 +3,7 @@
 #SBATCH -M snowy
 #SBATCH -p core
 #SBATCH -n 15
-#SBATCH -t 45:00
+#SBATCH -t 15:00 --qos=short
 #SBATCH -J DNA_Polishing
 #SBATCH --output=%x.%j.out
 
@@ -20,7 +20,6 @@ java -jar "${PILON_HOME}/pilon.jar" \
  --threads 5 \
  --genome "${FLYE_INPUT}${i}/${i}_assembly_flye.fasta" \
  --frags "${BAM_OUTPUT}${i}.paired.sorted.bam" \
- --unpaired "${BAM_OUTPUT}${i}.unpaired.sorted.bam" \
  --outdir "${BAM_OUTPUT}" \
  --output "${i}_pilon" \
  --changes \
