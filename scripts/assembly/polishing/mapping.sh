@@ -27,9 +27,9 @@ wait
 
 cd $SNIC_TMP
 
-bwa mem -t 5 "${FLYE_INPUT}DV3/DV3_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_80_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_80_2.trimmed.fastq.gz" > "${$SNIC_TMP}/DV3.paired.sam" &
-bwa mem -t 5 "${FLYE_INPUT}HP126/HP126_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_65_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_65_2.trimmed.fastq.gz" > "${$SNIC_TMP}/HP126.paired.sam" &
-bwa mem -t 5 "${FLYE_INPUT}R7/R7_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_71_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_71_2.trimmed.fastq.gz" > "${$SNIC_TMP}/R7.paired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}DV3/DV3_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_80_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_80_2.trimmed.fastq.gz" > "${SNIC_TMP}/DV3.paired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}HP126/HP126_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_65_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_65_2.trimmed.fastq.gz" > "${SNIC_TMP}/HP126.paired.sam" &
+bwa mem -t 5 "${FLYE_INPUT}R7/R7_assembly_flye.fasta" "${ILLUMINA_INPUT}shortread_dna_71_1.trimmed.fastq.gz" "${ILLUMINA_INPUT}shortread_dna_71_2.trimmed.fastq.gz" > "${SNIC_TMP}/R7.paired.sam" &
 
 wait
 
