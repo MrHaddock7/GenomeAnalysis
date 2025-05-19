@@ -23,7 +23,6 @@ java -jar "${PILON_HOME}/pilon.jar" \
  --outdir "${BAM_OUTPUT}" \
  --output "${i}_pilon" \
  --changes \
- --vcf
 ) &
 done
 
