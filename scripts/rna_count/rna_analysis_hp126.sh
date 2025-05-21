@@ -23,7 +23,7 @@ mkdir HP126
 # HP126 replicate 1
 
 (
-    bwa mem -t 5 assembly/HP126_pilon.fasta 02-04-trimomatic_rna/shortread_rna_59_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_59_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_59_2.trimmed.fastq.gz \
     | samtools sort -@5 -o HP126/HP126_rep1_rna_map.sorted.bam
 
@@ -34,7 +34,7 @@ mkdir HP126
 # HP126 replicate 2
 
 (
-    bwa mem -t 5 assembly/HP126_pilon.fasta 02-04-trimomatic_rna/shortread_rna_60_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_60_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_60_2.trimmed.fastq.gz \
     | samtools sort -@5 -o HP126/HP126_rep2_rna_map.sorted.bam
 
@@ -45,7 +45,7 @@ mkdir HP126
 # HP126 replicate 3
 
 (
-    bwa mem -t 5 assembly/HP126_pilon.fasta 02-04-trimomatic_rna/shortread_rna_61_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_61_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_61_2.trimmed.fastq.gz \
     | samtools sort -@5 -o HP126/HP126_rep3_rna_map.sorted.bam
 
@@ -56,8 +56,9 @@ mkdir HP126
 wait
 
 featureCounts -T 15 -p -s 2 \
--a assembly/HP126.gff \
+-a assembly/R7.gff \
 -t CDS -g ID \
 -o HP126/featureCount_HP126.txt HP126/HP126*.sorted.bam 
 
 cp -r $SNIC_TMP/HP126 /home/haddock/private/Genome_analysis/GenomeAnalysis/analyses/05_rna_count/
+

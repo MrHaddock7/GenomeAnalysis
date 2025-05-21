@@ -23,7 +23,7 @@ mkdir DV3
 # DV3 replicate 1
 
 (
-    bwa mem -t 5 assembly/DV3_pilon.fasta 02-04-trimomatic_rna/shortread_rna_56_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_56_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_56_2.trimmed.fastq.gz \
     | samtools sort -@5 -o DV3/DV3_rep1_rna_map.sorted.bam
 
@@ -34,7 +34,7 @@ mkdir DV3
 # DV3 replicate 2
 
 (
-    bwa mem -t 5 assembly/DV3_pilon.fasta 02-04-trimomatic_rna/shortread_rna_57_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_57_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_57_2.trimmed.fastq.gz \
     | samtools sort -@5 -o DV3/DV3_rep2_rna_map.sorted.bam
 
@@ -45,7 +45,7 @@ mkdir DV3
 # DV3 replicate 3
 
 (
-    bwa mem -t 5 assembly/DV3_pilon.fasta 02-04-trimomatic_rna/shortread_rna_58_1.trimmed.fastq.gz \
+    bwa mem -t 5 assembly/R7_pilon.fasta 02-04-trimomatic_rna/shortread_rna_58_1.trimmed.fastq.gz \
     02-04-trimomatic_rna/shortread_rna_58_2.trimmed.fastq.gz \
     | samtools sort -@5 -o DV3/DV3_rep3_rna_map.sorted.bam
 
@@ -56,7 +56,7 @@ mkdir DV3
 wait
 
 featureCounts -T 15 -p -s 2 \
--a assembly/DV3.gff \
+-a assembly/R7.gff \
 -t CDS -g ID \
 -o DV3/featureCount_DV3.txt DV3/DV3*.sorted.bam 
 
